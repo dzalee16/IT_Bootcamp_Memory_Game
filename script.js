@@ -1,15 +1,19 @@
 //DOM
 //------------------------------------------------------------------
+let form = document.querySelector("form");
+console.log(form);
 let inputName = document.getElementById("username");
-let divTable = document.querySelector("#table");
+console.log(inputName);
 let spanTimer = document.querySelector("#timer");
-
-let prikaz = document.getElementById("prikazSlika");
+console.log(spanTimer);
 let divShowCase = document.querySelector("#showCase");
-
+console.log(divShowCase);
+let divTable = document.querySelector("#table");
+console.log(divTable);
+//-------------------------------------------------------------------------
 //LOCAL STORAGE
-let resultTable = [];
-localStorage.setItem("resultTable", JSON.stringify(resultTable));
+let resultArr = [];
+
 
 //---------------------------------------------------------------------
 
@@ -31,29 +35,122 @@ let myArr4 = ["001.png", "002.png", "003.png", "004.png", "005.png", "006.png", 
 
 //Korisnicko ime i radio button
 //----------------------------------------------------------------------------
-inputName.addEventListener('keyup', event => {
+// inputName.addEventListener('keyup', event => {
+//     event.preventDefault();
+//     if(event.keyCode == 13){
+//         let username = inputName.value;
+//         if(username == "" || username == null){
+//             alert("Morate uneti korisnicko ime");
+//         } else {
+//             localStorage.setItem("Korisnicko ime", username);
+//             // resultTable.push(username);
+//             // localStorage.setItem("resultTable", JSON.stringify(resultTable));
+//             let inputRadio = document.querySelector("input[name=category]:checked");
+//             if(inputRadio.value == "4"){
+//                 createTable(myArr4, "case4x4");
+//             } else if(inputRadio.value == "6"){
+//                 createTable(myArr6, "case6x6");
+//             } else if(inputRadio.value == "8"){
+//                 createTable(myArr8, "case8x8");
+//             } else {
+//                 createTable(myArr10, "case10x10");
+//             }
+//         }
+//     }
+// });
+
+//Napravi funkciju startGame koja ce da ide iz forme, klikom na enter
+form.addEventListener('submit', event => {
     event.preventDefault();
-    if(event.keyCode == 13){
-        let username = inputName.value;
-        if(username == "" || username == null){
-            alert("Morate uneti korisnicko ime");
+    let username = inputName.value;
+    if(username == "" && username == null){
+        alert("Morate da unesete korisnicko ime, sa najmanje jednim karakterom");
+    } else {
+        let inputRadio = document.querySelector("input[name=category]:checked");
+        let checkedBtn = inputRadio.id;
+        if(checkedBtn == "easy"){
+            createTable(myArr4, "case4x4");
+        } else if(checkedBtn == "middle"){
+            createTable(myArr6, "case6x6");
+        } else if(checkedBtn == "hard"){
+            createTable(myArr8, "case8x8");
         } else {
-            localStorage.setItem("Korisnicko ime", username);
-            // resultTable.push(username);
-            // localStorage.setItem("resultTable", JSON.stringify(resultTable));
-            let inputRadio = document.querySelector("input[name=category]:checked");
-            if(inputRadio.value == "4"){
-                createTable(myArr4, "case4x4");
-            } else if(inputRadio.value == "6"){
-                createTable(myArr6, "case6x6");
-            } else if(inputRadio.value == "8"){
-                createTable(myArr8, "case8x8");
-            } else {
-                createTable(myArr10, "case10x10");
-            }
+            createTable(myArr10, "case10x10");
         }
     }
 });
+
+//----------------------------------------------------------------------
+//LocalStorage
+    // let resultObj = {
+    //     name: username,
+    //     time: timer,
+    //     category: checkedBtn
+    // };
+    // let resultArr = [];
+    // console.log(resultObj);
+
+    // if(JSON.parse(localStorage.getItem("Result")) == null){
+    //     resultArr.push(resultObj);
+    //     localStorage.setItem("Result", JSON.stringify(resultArr));
+    // } else {
+    //     resultArr = JSON.parse(localStorage.getItem("Result"));
+    //     resultArr.push(resultObj);
+    //     localStorage.setItem("Result", JSON.stringify(resultArr));
+    // }
+//------------------------------------------------------------------------------
+
+//TABELA REZULTATA
+// function resultTable() {    
+//     let result = JSON.parse(localStorage.getItem("Result"));
+//     console.log(result);
+//     let tdName = document.querySelectorAll(".resultName");
+//     let tdTime = document.querySelectorAll(".resultTime");
+//     tdName.forEach((td, i) => {
+//         if(i % 5 == 0) {
+//             td.innerHTML = result[0].name;
+//         } else if(i % 5 == 1){
+//             td.innerHTML = result[1].name;
+//         } else if(i % 5 == 2){
+//             td.innerHTML = result[2].name;
+//         } else if(i % 5 == 3){
+//             td.innerHTML = result[3].name;
+//         } else if(i % 5 == 4){
+//             td.innerHTML = result[4].name;
+//         }
+//     });
+// }
+
+
+
+let result = JSON.parse(localStorage.getItem("Result"));
+console.log(result);
+// // divTable.innerHTML = result[0].name;
+// // divTable.innerHTML += result[0].time;
+let tdName = document.querySelectorAll(".resultName");
+let tdTime = document.querySelectorAll(".resultTime");
+
+tdName.forEach((td, i) => {
+    if(i % 5 == 0) {
+        td.innerHTML = result[0].name;
+    } else if(i % 5 == 1){
+        td.innerHTML = result[1].name;
+    } else if(i % 5 == 2){
+        td.innerHTML = result[2].name;
+    } else if(i % 5 == 3){
+        td.innerHTML = result[3].name;
+    } else if(i % 5 == 4){
+        td.innerHTML = result[4].name;
+    }
+});
+
+
+
+
+
+//------------------------------------------------------------------------------
+
+
 //----------------------------------------------------------------------------
 
 //Sad pronadji da se slicice okrece na klik i ako su dve iste da ostanu okrenute,a ako nisu onda da se vrate na prvobitni polozaj
@@ -63,7 +160,7 @@ inputName.addEventListener('keyup', event => {
 //Kada se igra zavrsi onda da se timer zaustavi da se vreme belezi u Local Storeg -- u Objektu koji ce da cuva i korisnicko ime i vreme korisnika i kasnije da ih prikazuje u tabeli
 
 
-//FUNKCIJA ODBROJAVANJE
+//POCETAK ODBROJAVANJA
 //----------------------------------------------------------------------------
 let clock = null;
 function timerStart(){
@@ -74,7 +171,8 @@ function timerStart(){
         },1000);
     }
 }
-
+//------------------------------------------------------------------------------
+//KRAJ ODBROJAVANJA
 function timerEnd() {
     clearInterval(clock);
         clock = null;
@@ -82,11 +180,10 @@ function timerEnd() {
 //----------------------------------------------------------------------------
 
 
-//Random niz 
+//RADNOM NIZ
 //----------------------------------------------------------------------------
 let radnomCard = arr => {
     arr.sort(() => 0.5 - Math.random());
-    // console.log(arr);
 }
 //----------------------------------------------------------------------------
 
@@ -105,16 +202,59 @@ function newGame(arr, div) {
     if(counter == arr.length){
         //Uvodim f-ju za zavrsetak vremena, ako su sve kartice otvorene
         timerEnd();
+//--------------------------------------------------------------------------
+//LOCAL STORAGE
+        let inputName = document.querySelector("#username");
+        let username = inputName.value;
+        let spanTimer = document.querySelector("#timer");
+        let timer = spanTimer.innerHTML;
+        timer = Number(timer);
+        let inputRadio = document.querySelector("input[name=category]:checked");
+        let checkedBtn = inputRadio.id;
+
+        let resultObj = {
+            name: username,
+            time: timer,
+            category: checkedBtn
+        };
+        // let resultArr = [];
+        console.log(resultObj);
+        //Funkcija po kojoj cu da sortiram igrace po vremenu od najnizeg do najveceg
+        function sorting(a,b) {
+            let comp = 0;
+            if(a.time > b.time){
+                comp = 1;
+            } else {
+                comp = -1;
+            }
+            return comp;
+        }
+    
+        if(JSON.parse(localStorage.getItem("Result")) == null){
+            resultArr.push(resultObj);
+            localStorage.setItem("Result", JSON.stringify(resultArr));
+        } else {
+            resultArr = JSON.parse(localStorage.getItem("Result"));
+            resultArr.push(resultObj);
+            resultArr.sort(sorting);
+            localStorage.setItem("Result", JSON.stringify(resultArr));
+        }
+//-----------------------------------------------------------------------------
+
         let text = "Uspesno ste zavrsili igru, da li zelite da igrate opet?";
         if(confirm(text) == true){
             let divOldGame = document.getElementById(div);
             divShowCase.removeChild(divOldGame);
             //Uvodim f-ju za ponovno kreiranje tabele i pocetak igre
-            createTable(arr, div);
+
+            //Ovde uvedi posle fu-ju starGame()
+            createTable(arr, div); 
             //Uvodim f-ju pocetak merenja vremena za novu igru
             timerStart();
         } else {
+            //Ovde stavi tabelu rezultata
             alert("Vas rezultat je");
+            resultTable();
         }
         counter = 0;
     }
@@ -243,21 +383,6 @@ function createTable(arr, div) {
 
 
 //-------------------------------------------------------------
-// inputRadio.addEventListener('click', event => {
-    // if(inputRadio.id == "easy"){
-    //     formingTable(4);
-    // } else if(inputRadio.id == "middle"){
-    //     formingTable(6);
-    // } else if(inputRadio.id == "hard"){
-    //     formingTable(8);
-    // } else {
-    //     formingTable(10);
-    // }
-// });
-
-
-
-
 
 //RADIIIIIIIIIIIIIIIII
 //Meri koliko puta su se okrenule iste kartice

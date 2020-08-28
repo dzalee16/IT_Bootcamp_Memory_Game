@@ -11,29 +11,92 @@
         <h1>Igra memorije</h1>
         <!-- <input type="text" name="Username" id="username">
         <span id="timer">0</span> -->
-        <!-- <form>
-            <input type="text" name="Username" id="username">
-            <span id="timer">0</span>
-            <br><br>
-            <input type="radio" name="category" id="easy" value="4" checked>Lako
-            <input type="radio" name="category" id="middle" value="6">Srednje
-            <input type="radio" name="category" id="hard" value="8">Tesko
-            <input type="radio" name="category" id="expert" value="10">Ekspert
-        </form> -->
-        <input type="text" name="Username" id="username">
+        <div class="row">
+            <div class="col">
+                <form>
+                    <input type="text" name="Username" id="username">
+                    <span id="timer">0</span>
+                    <br><br>
+                    <div class="col-6 col-t-6">
+                        <input type="radio" name="category" id="easy" value="4" checked>Lako
+                        <input type="radio" name="category" id="middle" value="6">Srednje
+                        <input type="radio" name="category" id="hard" value="8">Tesko
+                        <input type="radio" name="category" id="expert" value="10">Ekspert
+                    </div>
+                    <!-- <input type="radio" name="category" id="easy" value="4" checked>Lako
+                    <input type="radio" name="category" id="middle" value="6">Srednje
+                    <input type="radio" name="category" id="hard" value="8">Tesko
+                    <input type="radio" name="category" id="expert" value="10">Ekspert -->
+                </form>
+            </div>
+            <div class="col-6 col-t-6">
+                <button>Lako</button>
+                <button>Srednje</button>
+                <button>Tesko</button>
+                <button>Ekspert</button>
+            </div>
+        </div> 
+        <!--BEZ FOMRE-->
+        <!-- <input type="text" name="Username" id="username">
         <span id="timer">0</span>
         <br><br>
         <input type="radio" name="category" id="easy" value="4" checked>Lako
         <input type="radio" name="category" id="middle" value="6">Srednje
         <input type="radio" name="category" id="hard" value="8">Tesko
-        <input type="radio" name="category" id="expert" value="10">Ekspert
-        <div id="table"></div>
+        <input type="radio" name="category" id="expert" value="10">Ekspert -->
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-6 col-t-6">
+                <div id="showCase"></div>
+            </div>
+            <div class="col-6 col-t-6">
+                <table>
+                    <tr>
+                        <th>Mesto</th>
+                        <th>Ime korisnika</th>
+                        <th>Vreme</th>
+                    </tr>
+                    <tr>
+                        <td>1.</td>
+                        <td class="resultName"></td>
+                        <td class="resultTime"></td>
+                    </tr>
+                    <tr>
+                        <td>2.</td>
+                        <td class="resultName">s</td>
+                        <td class="result">s</td>
+                    </tr>
+                    <tr>
+                        <td>3.</td>
+                        <td class="resultName">s</td>
+                        <td class="result">s</td>
+                    </tr>
+                    <tr>
+                        <td>4.</td>
+                        <td class="resultName">s</td>
+                        <td class="result">s</td>
+                    </tr>
+                    <tr>
+                        <td>5.</td>
+                        <td class="resultName">s</td>
+                        <td class="result">s</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 
-    <div id="prikazSlika"></div>
-
-    <div id="showCase"></div>
-
+    <!-- <div id="showCase"></div> -->
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div id="table">Nesto</div>
+            </div>
+        </div>
+    </div>
+    
+    <button id="guraj">Guraj</button>
     <script src="script.js"></script>
 </body>
 </html>
