@@ -9,8 +9,6 @@
 <body>
     <div class="container">
         <h1>Igra memorije</h1>
-        <!-- <input type="text" name="Username" id="username">
-        <span id="timer">0</span> -->
         <div class="row">
             <div class="col">
                 <form>
@@ -23,29 +21,15 @@
                         <input type="radio" name="category" id="hard" value="8">Tesko
                         <input type="radio" name="category" id="expert" value="10">Ekspert
                     </div>
-                    <!-- <input type="radio" name="category" id="easy" value="4" checked>Lako
-                    <input type="radio" name="category" id="middle" value="6">Srednje
-                    <input type="radio" name="category" id="hard" value="8">Tesko
-                    <input type="radio" name="category" id="expert" value="10">Ekspert -->
                 </form>
             </div>
             <div class="col-6 col-t-6">
-                <button>Lako</button>
-                <button>Srednje</button>
-                <button>Tesko</button>
-                <button>Ekspert</button>
+                <button id="e">Lako</button>
+                <button id="m">Srednje</button>
+                <button id="h">Tesko</button>
+                <button id="exp">Ekspert</button>
             </div>
         </div> 
-        <!--BEZ FOMRE-->
-        <!-- <input type="text" name="Username" id="username">
-        <span id="timer">0</span>
-        <br><br>
-        <input type="radio" name="category" id="easy" value="4" checked>Lako
-        <input type="radio" name="category" id="middle" value="6">Srednje
-        <input type="radio" name="category" id="hard" value="8">Tesko
-        <input type="radio" name="category" id="expert" value="10">Ekspert -->
-    </div>
-    <div class="container">
         <div class="row">
             <div class="col-6 col-t-6">
                 <div id="showCase"></div>
@@ -56,11 +40,21 @@
                 </div>
             </div>
         </div>
+        <!--BEZ FOMRE-->
+        <!-- <input type="text" name="Username" id="username">
+        <span id="timer">0</span>
+        <br><br>
+        <input type="radio" name="category" id="easy" value="4" checked>Lako
+        <input type="radio" name="category" id="middle" value="6">Srednje
+        <input type="radio" name="category" id="hard" value="8">Tesko
+        <input type="radio" name="category" id="expert" value="10">Ekspert -->
     </div>
 
-    <!-- <div id="showCase"></div> -->
+
+    <div id="proba"></div>
     
     
     <script src="script.js"></script>
+    <script src="result.js"></script>
 </body>
 </html>

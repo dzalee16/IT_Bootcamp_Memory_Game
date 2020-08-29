@@ -10,10 +10,22 @@ let divShowCase = document.querySelector("#showCase");
 console.log(divShowCase);
 let divTable = document.querySelector("#table");
 console.log(divTable);
+let btnE = document.getElementById("e");
+console.log(btnE);
+let btnM = document.getElementById("m");
+console.log(btnM);
+let btnH = document.getElementById("h");
+console.log(btnH);
+let btnExp = document.getElementById("exp");
+console.log(btnExp);
 //-------------------------------------------------------------------------
-//LOCAL STORAGE
-// let resultArr = [];
-
+//NIZOVI
+//Niz slika
+let cardsArray = [];
+//Niz id-ijeva slika 
+let cardsArrayId = [];
+//Brojac
+let counter = 0;
 
 //---------------------------------------------------------------------
 
@@ -81,69 +93,25 @@ form.addEventListener('submit', event => {
 });
 
 //----------------------------------------------------------------------
-
-//------------------------------------------------------------------------------
-
-//TABELA REZULTATA
-function resultTable() {    
-    resultArr = JSON.parse(localStorage.getItem("Result"));
-    console.log(resultArr);
-    let table = document.createElement("table");
-    let rowHed = document.createElement("tr");
-    let hed1 = document.createElement("th");
-    let hed2 = document.createElement("th");
-    let hed3 = document.createElement("th");
-    hed1.innerHTML = "Mesto";
-    hed2.innerHTML = "Korisnicko ime";
-    hed3.innerHTML = "Vreme";
-    rowHed.appendChild(hed1);
-    rowHed.appendChild(hed2);
-    rowHed.appendChild(hed3);
-    table.appendChild(rowHed);
-    resultArr.forEach((elem, i) => {
-        let row = document.createElement("tr");
-        let cell1 = document.createElement("td"); 
-        let cell2 = document.createElement("td"); 
-        let cell3 = document.createElement("td"); 
-        cell1.innerHTML = i + 1 + ".";
-        cell2.innerHTML = elem.name;
-        cell3.innerHTML = elem.time;
-        row.appendChild(cell1);
-        row.appendChild(cell2);
-        row.appendChild(cell3);
-        table.appendChild(row);
-    });    
-    divTable.appendChild(table); 
+//FUNKCIJA KATEGORIJE ZA SMESTANJE U LOCAL STORAGE
+function category() {
+    let inputRadio = document.querySelector("input[name=category]:checked");
+    let checkedBtn = inputRadio.id;
+    if(checkedBtn == "easy"){
+        keepingLocalStorage(resultArrEasy, "Easy", "easy");
+    } else if(checkedBtn == "middle"){
+        keepingLocalStorage(resultArrMiddle, "Middle", "middle");
+    } else if(checkedBtn == "hard"){
+        keepingLocalStorage(resultArrHard, "Hard", "hard");
+    } else {
+        keepingLocalStorage(resultArrExpert, "Expert", "expert");
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//------------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 
 
 //----------------------------------------------------------------------------
-
-//Sad pronadji da se slicice okrece na klik i ako su dve iste da ostanu okrenute,a ako nisu onda da se vrate na prvobitni polozaj
-
-//Napravi da je dozvoljeno samo dva klika odjednom
-
-//Kada se igra zavrsi onda da se timer zaustavi da se vreme belezi u Local Storeg -- u Objektu koji ce da cuva i korisnicko ime i vreme korisnika i kasnije da ih prikazuje u tabeli
-
-
 //POCETAK ODBROJAVANJA
-//----------------------------------------------------------------------------
 let clock = null;
 function timerStart(){
     let counter = 0;
@@ -162,69 +130,38 @@ function timerEnd() {
 //----------------------------------------------------------------------------
 
 
-//RADNOM NIZ
+
 //----------------------------------------------------------------------------
+//RADNOM NIZ
 let radnomCard = arr => {
     arr.sort(() => 0.5 - Math.random());
 }
 //----------------------------------------------------------------------------
 
-//NIZOVI
-//Niz slika
-let cardsArray = [];
-//Niz id-ijeva slika 
-let cardsArrayId = [];
-//Brojac
-let counter = 0;
 
-
-//FUNKCIJA NOVE IGRE
 //----------------------------------------------------------------------------
+//FUNKCIJA NOVE IGRE
 function newGame(arr, div) {
     if(counter == arr.length){
         //Uvodim f-ju za zavrsetak vremena, ako su sve kartice otvorene
         timerEnd();
 //--------------------------------------------------------------------------
 //LOCAL STORAGE
-        let inputName = document.querySelector("#username");
-        let username = inputName.value;
-        let spanTimer = document.querySelector("#timer");
-        let timer = spanTimer.innerHTML;
-        timer = Number(timer);
-        let inputRadio = document.querySelector("input[name=category]:checked");
-        let checkedBtn = inputRadio.id;
+        category();
+        btnE.addEventListener('click', function() {
+            resultTable(resultArrEasy, "Easy");
+            // divTable.appendChild(divShowTable);
+        });
+        btnM.addEventListener('click', function() {
+            resultTable(resultArrMiddle, "Middle");
 
-        let resultObj = {
-            name: username,
-            time: timer,
-            category: checkedBtn
-        };
-        let resultArr = [];
-        console.log(resultObj);
-        //Funkcija po kojoj cu da sortiram igrace po vremenu od najnizeg do najveceg
-        function sorting(a,b) {
-            let comp = 0;
-            if(a.time > b.time){
-                comp = 1;
-            } else {
-                comp = -1;
-            }
-            return comp;
-        }
-    
-        if(JSON.parse(localStorage.getItem("Result")) == null){
-            resultArr.push(resultObj);
-            // resultArr.splice(3,1);
-            localStorage.setItem("Result", JSON.stringify(resultArr));
-        } else {
-            resultArr = JSON.parse(localStorage.getItem("Result"));
-            resultArr.push(resultObj);
-            //Sortitam po vremenu od najmanjeg do najveceg
-            resultArr.sort(sorting);
-            //Zatim uvek isecem poslednji elem niza
-            resultArr.splice(5,1);
-            localStorage.setItem("Result", JSON.stringify(resultArr));
-        }
+        });
+        btnH.addEventListener('click', function() {
+            resultTable(resultArrHard, "Hard");
+        });
+        btnExp.addEventListener('click', function() {
+            resultTable(resultArrExpert, "Expert");
+        });
         
 //-----------------------------------------------------------------------------
 
@@ -240,16 +177,23 @@ function newGame(arr, div) {
             timerStart();
         } else {
             //Ovde stavi tabelu rezultata
-            alert("Vas rezultat je");
-            resultTable();
+            alert("Vas rezultat mozete pogledati klikom na polje kategorije koju ste igrali");
+            //Nakon 30 sekundi restartujem igricu na pocetak
+            setTimeout(() => {
+                let divOldGame = document.getElementById(div);
+                divShowCase.removeChild(divOldGame);
+                form.reset();
+                spanTimer.innerHTML = 0;
+            } , 1000 * 30);
         }
         counter = 0;
     }
 }
 //----------------------------------------------------------------------------
 
-//FUNKCIJA OKRETANJE KARTE
+
 //---------------------------------------------------------------------------
+//FUNKCIJA OKRETANJE KARTE
 function cardsFliping(arr, card, i, div) {
     card.addEventListener('click', event => {
         //Ukoliko je niz slika strogo manji od 2 - omogucava mi okretanje samo dve kartice
@@ -300,8 +244,8 @@ function cardsFliping(arr, card, i, div) {
 }
 //---------------------------------------------------------------------------
 
-// FUNCKIJA KREIRANJE TABLE
 //---------------------------------------------------------------------------
+// FUNCKIJA KREIRANJE TABLE
 //Funkcija ima dva parametra: prvi je niz slika, a drugi je div-ov id, koji ce da se menja u zavisnosti od toga koja se tezina igre izabere
 function createTable(arr, div) {
     //Pravim div, koji ce u zavisnosti od tezine igre da menja svoj stil
@@ -327,35 +271,6 @@ function createTable(arr, div) {
 //----------------------------------------------------------------------------
 
 
-// resultArr = JSON.parse(localStorage.getItem("Result"));
-// console.log(resultArr);
-// let table = document.createElement("table");
-// let rowHed = document.createElement("tr");
-// let hed1 = document.createElement("th");
-// let hed2 = document.createElement("th");
-// let hed3 = document.createElement("th");
-// hed1.innerHTML = "Mesto";
-// hed2.innerHTML = "Korisnicko ime";
-// hed3.innerHTML = "Vreme";
-// rowHed.appendChild(hed1);
-// rowHed.appendChild(hed2);
-// rowHed.appendChild(hed3);
-// table.appendChild(rowHed);
-// resultArr.forEach((elem, i) => {
-//     let row = document.createElement("tr");
-//     let cell1 = document.createElement("td"); 
-//     let cell2 = document.createElement("td"); 
-//     let cell3 = document.createElement("td"); 
-//     cell1.innerHTML = i + 1 + ".";
-//     cell2.innerHTML = elem.name;
-//     cell3.innerHTML = elem.time;
-//     row.appendChild(cell1);
-//     row.appendChild(cell2);
-//     row.appendChild(cell3);
-//     table.appendChild(row);
-// });    
-// divTable.appendChild(table); 
-
 //---------------------------------------------------------------------------
 //Radnom redjanje niza
 // let niz = ["Mladen", "jovic", "Tijana", "Bojan", "Jasmina", "Strahinja"];
@@ -364,3 +279,5 @@ function createTable(arr, div) {
 // for(let i = niz.length - 1; i >= niz.length + 1 - niz.length; i-- ){ 
 //     console.log(niz[i]);
 // }
+//------------------------------------------------------------------------
+
