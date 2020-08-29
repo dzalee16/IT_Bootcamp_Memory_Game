@@ -12,7 +12,7 @@ let divTable = document.querySelector("#table");
 console.log(divTable);
 //-------------------------------------------------------------------------
 //LOCAL STORAGE
-let resultArr = [];
+// let resultArr = [];
 
 
 //---------------------------------------------------------------------
@@ -81,68 +81,50 @@ form.addEventListener('submit', event => {
 });
 
 //----------------------------------------------------------------------
-//LocalStorage
-    // let resultObj = {
-    //     name: username,
-    //     time: timer,
-    //     category: checkedBtn
-    // };
-    // let resultArr = [];
-    // console.log(resultObj);
 
-    // if(JSON.parse(localStorage.getItem("Result")) == null){
-    //     resultArr.push(resultObj);
-    //     localStorage.setItem("Result", JSON.stringify(resultArr));
-    // } else {
-    //     resultArr = JSON.parse(localStorage.getItem("Result"));
-    //     resultArr.push(resultObj);
-    //     localStorage.setItem("Result", JSON.stringify(resultArr));
-    // }
 //------------------------------------------------------------------------------
 
 //TABELA REZULTATA
-// function resultTable() {    
-//     let result = JSON.parse(localStorage.getItem("Result"));
-//     console.log(result);
-//     let tdName = document.querySelectorAll(".resultName");
-//     let tdTime = document.querySelectorAll(".resultTime");
-//     tdName.forEach((td, i) => {
-//         if(i % 5 == 0) {
-//             td.innerHTML = result[0].name;
-//         } else if(i % 5 == 1){
-//             td.innerHTML = result[1].name;
-//         } else if(i % 5 == 2){
-//             td.innerHTML = result[2].name;
-//         } else if(i % 5 == 3){
-//             td.innerHTML = result[3].name;
-//         } else if(i % 5 == 4){
-//             td.innerHTML = result[4].name;
-//         }
-//     });
-// }
+function resultTable() {    
+    resultArr = JSON.parse(localStorage.getItem("Result"));
+    console.log(resultArr);
+    let table = document.createElement("table");
+    let rowHed = document.createElement("tr");
+    let hed1 = document.createElement("th");
+    let hed2 = document.createElement("th");
+    let hed3 = document.createElement("th");
+    hed1.innerHTML = "Mesto";
+    hed2.innerHTML = "Korisnicko ime";
+    hed3.innerHTML = "Vreme";
+    rowHed.appendChild(hed1);
+    rowHed.appendChild(hed2);
+    rowHed.appendChild(hed3);
+    table.appendChild(rowHed);
+    resultArr.forEach((elem, i) => {
+        let row = document.createElement("tr");
+        let cell1 = document.createElement("td"); 
+        let cell2 = document.createElement("td"); 
+        let cell3 = document.createElement("td"); 
+        cell1.innerHTML = i + 1 + ".";
+        cell2.innerHTML = elem.name;
+        cell3.innerHTML = elem.time;
+        row.appendChild(cell1);
+        row.appendChild(cell2);
+        row.appendChild(cell3);
+        table.appendChild(row);
+    });    
+    divTable.appendChild(table); 
+}
 
 
 
-let result = JSON.parse(localStorage.getItem("Result"));
-console.log(result);
-// // divTable.innerHTML = result[0].name;
-// // divTable.innerHTML += result[0].time;
-let tdName = document.querySelectorAll(".resultName");
-let tdTime = document.querySelectorAll(".resultTime");
 
-tdName.forEach((td, i) => {
-    if(i % 5 == 0) {
-        td.innerHTML = result[0].name;
-    } else if(i % 5 == 1){
-        td.innerHTML = result[1].name;
-    } else if(i % 5 == 2){
-        td.innerHTML = result[2].name;
-    } else if(i % 5 == 3){
-        td.innerHTML = result[3].name;
-    } else if(i % 5 == 4){
-        td.innerHTML = result[4].name;
-    }
-});
+
+
+
+
+
+
 
 
 
@@ -217,7 +199,7 @@ function newGame(arr, div) {
             time: timer,
             category: checkedBtn
         };
-        // let resultArr = [];
+        let resultArr = [];
         console.log(resultObj);
         //Funkcija po kojoj cu da sortiram igrace po vremenu od najnizeg do najveceg
         function sorting(a,b) {
@@ -232,13 +214,18 @@ function newGame(arr, div) {
     
         if(JSON.parse(localStorage.getItem("Result")) == null){
             resultArr.push(resultObj);
+            // resultArr.splice(3,1);
             localStorage.setItem("Result", JSON.stringify(resultArr));
         } else {
             resultArr = JSON.parse(localStorage.getItem("Result"));
             resultArr.push(resultObj);
+            //Sortitam po vremenu od najmanjeg do najveceg
             resultArr.sort(sorting);
+            //Zatim uvek isecem poslednji elem niza
+            resultArr.splice(5,1);
             localStorage.setItem("Result", JSON.stringify(resultArr));
         }
+        
 //-----------------------------------------------------------------------------
 
         let text = "Uspesno ste zavrsili igru, da li zelite da igrate opet?";
@@ -340,37 +327,34 @@ function createTable(arr, div) {
 //----------------------------------------------------------------------------
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// resultArr = JSON.parse(localStorage.getItem("Result"));
+// console.log(resultArr);
+// let table = document.createElement("table");
+// let rowHed = document.createElement("tr");
+// let hed1 = document.createElement("th");
+// let hed2 = document.createElement("th");
+// let hed3 = document.createElement("th");
+// hed1.innerHTML = "Mesto";
+// hed2.innerHTML = "Korisnicko ime";
+// hed3.innerHTML = "Vreme";
+// rowHed.appendChild(hed1);
+// rowHed.appendChild(hed2);
+// rowHed.appendChild(hed3);
+// table.appendChild(rowHed);
+// resultArr.forEach((elem, i) => {
+//     let row = document.createElement("tr");
+//     let cell1 = document.createElement("td"); 
+//     let cell2 = document.createElement("td"); 
+//     let cell3 = document.createElement("td"); 
+//     cell1.innerHTML = i + 1 + ".";
+//     cell2.innerHTML = elem.name;
+//     cell3.innerHTML = elem.time;
+//     row.appendChild(cell1);
+//     row.appendChild(cell2);
+//     row.appendChild(cell3);
+//     table.appendChild(row);
+// });    
+// divTable.appendChild(table); 
 
 //---------------------------------------------------------------------------
 //Radnom redjanje niza
@@ -380,63 +364,3 @@ function createTable(arr, div) {
 // for(let i = niz.length - 1; i >= niz.length + 1 - niz.length; i-- ){ 
 //     console.log(niz[i]);
 // }
-
-
-//-------------------------------------------------------------
-
-//RADIIIIIIIIIIIIIIIII
-//Meri koliko puta su se okrenule iste kartice
-// let counter = 0;
-
-// cards.forEach((card, i) => {
-//     card.addEventListener('click', event => {
-//         // card.setAttribute("src", `images/${myArr4[i]}`);
-//         // console.log(event);
-//         // console.log(card);
-//         //Ukoliko je niz slika strogo manji od 2 - omogucava mi okretanje samo dve kartice
-//         if(cardsArray.length < 2) {
-//             card.setAttribute("src", `images/${myArr4[i]}`);
-//             console.log(event);
-//             console.log(card);
-//             console.log("Uslov 1")
-//             // Ukoliko je niz slika jendak 0, sto je uvek na pocetku - dodaj sliku u niz slika, i id u niz id-ja
-//             if(cardsArray.length == 0){
-//                 cardsArray.push(myArr4[i]);
-//                 cardsArrayId.push(i);    
-//                 console.log(cardsArray, cardsArrayId);
-//                 console.log("Uslov 2");
-//             //Za drugi klik nece biti ispunjen prvi uslov vec drugi jer ce niz slika da bude jendak sa 1
-//             //Tu mi dodaj jos po jedan element u moja dva niza
-//             } else if(cardsArray.length == 1){
-//                 cardsArray.push(myArr4[i]);
-//                 cardsArrayId.push(i);    
-//                 console.log(cardsArray, cardsArrayId);
-//                 console.log("Uslov 3");
-//                 //Ako je prvi elem niza slika jednak drugom, povecavaj mi brojilac za 2, posto su dve slike okrenute, i isprazni mi oba niza 
-//                 if(cardsArray[0] == cardsArray[1]){
-//                     counter += 2;
-//                     console.log(counter);
-//                     cardsArray = [];
-//                     cardsArrayId = [];
-//                     console.log("Uslov 4");
-//                 // U suprotnom ako kartice nisu jednake, podesavam vreme za koje ce se kartice vratiti u prvobitni polozaj, i opet praznim niz kako bi mogle i druge kartice da se otvaraju
-//                 } else {
-//                     setTimeout( () => {
-//                         let firstCard = document.getElementById(`${cardsArrayId[0]}`);
-//                         let secondCard = document.getElementById(`${cardsArrayId[1]}`);
-//                         console.log(firstCard);
-//                         console.log(secondCard);
-//                         console.log("Uslov 5");
-//                         firstCard.setAttribute("src", "images/gym.png");
-//                         secondCard.setAttribute("src", "images/gym.png");
-//                         cardsArray = [];
-//                         cardsArrayId = [];
-//                     } , 2000);
-//                 }
-//             }
-//         }
-//     });
-// });
-
-
-
