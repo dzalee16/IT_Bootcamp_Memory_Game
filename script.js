@@ -1,23 +1,15 @@
 //DOM
 //------------------------------------------------------------------
 let form = document.querySelector("form");
-console.log(form);
 let inputName = document.getElementById("username");
-console.log(inputName);
 let spanTimer = document.querySelector("#timer");
-console.log(spanTimer);
 let divShowCase = document.querySelector("#showCase");
-console.log(divShowCase);
 let divTable = document.querySelector("#table");
-console.log(divTable);
 let btnE = document.getElementById("e");
-console.log(btnE);
 let btnM = document.getElementById("m");
-console.log(btnM);
 let btnH = document.getElementById("h");
-console.log(btnH);
 let btnExp = document.getElementById("exp");
-console.log(btnExp);
+
 //-------------------------------------------------------------------------
 //NIZOVI
 //Niz slika
@@ -71,7 +63,7 @@ let myArr4 = ["001.png", "002.png", "003.png", "004.png", "005.png", "006.png", 
 //     }
 // });
 
-//Napravi funkciju startGame koja ce da ide iz forme, klikom na enter
+//FORMA
 form.addEventListener('submit', event => {
     event.preventDefault();
     let username = inputName.value;
@@ -195,7 +187,7 @@ function newGame(arr, div) {
                 divShowCase.removeChild(divOldGame);
                 form.reset();
                 spanTimer.innerHTML = 0;
-            } , 1000 * 300);
+            } , 1000 * 30);
         }
         counter = 0;
     }
@@ -246,7 +238,7 @@ function cardsFliping(arr, card, i, div) {
                         secondCard.setAttribute("src", "images/gym.png");
                         cardsArray = [];
                         cardsArrayId = [];
-                    } , 2000);
+                    } , 1000);
                 }
             }
         }
@@ -265,7 +257,7 @@ function createTable(arr, div) {
         card.setAttribute("src", `images/gym.png`);
         card.setAttribute("id", i);
         //Uvodim f-ju radnom rasporeda karata, pre samog pocetka okretanja
-        // radnomCard(arr);
+        radnomCard(arr);
         //Uvodim f-ju okretanje karata
         cardsFliping(arr, card, i, div);
         //Uvodim f-ju za pocetak merenja vremena

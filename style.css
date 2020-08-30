@@ -4,6 +4,14 @@
     box-sizing: border-box;
 }
 
+body {
+    background-color: rgb(135, 135, 250);
+}
+
+h1 {
+    color: gold;
+}
+
 img {
     width: 50px;
     height: 50px;
@@ -15,29 +23,45 @@ img {
 }
 
 button {
-    
+    border: 1px solid rgb(7, 7, 88);
+    padding: 5px;
+    width: 120px;
+    border-radius: 5px;
+    background-color: rgb(95, 95, 255);
+    color: gold;
+}
+
+button:hover {
+    background-color: blue;
+}
+
+button:active {
+    background-color: rgb(1, 1, 49);
+}
+
+table th, td {
+    border: 1px solid gold;
+    background-color: rgb(95, 95, 255);
+    width: 160px;
+    color: gold;
+}
+
+table td {
+    text-align: center;
 }
 
 #timer {
-    border: 2px solid black;
+    border: 2px solid gold;
     padding: 5px;
     border-radius: 5px;
     margin-left: 10px;
+    color: gold;
 }
 
 #username {
-    border: 2px solid black;
+    border: 2px solid gold;
     border-radius: 3px ;
 }
-
-/* .container {
-    background-image: url("images/memory_game.jpg");
-    background-repeat: no-repeat;
-    background-size: 1000px;
-    height: 700px;
-    opacity: 0.9;
-} */
-
 
 /* Polja za igru */
  #case4x4 {
@@ -46,7 +70,7 @@ button {
     width: 220px;
     height: 240px;
     box-sizing: border-box;
-    border: 1px solid grey;
+    border: 1px solid gold;
 }
 
  #case6x6 {
@@ -55,7 +79,7 @@ button {
     width: 330px;
     height: 350px;
     box-sizing: border-box;
-    border: 1px solid grey;
+    border: 1px solid gold;
 } 
 
  #case8x8 {
@@ -64,7 +88,7 @@ button {
     width: 440px;
     height: 470px;
     box-sizing: border-box;
-    border: 1px solid grey;
+    border: 1px solid gold;
 }
 
 #case10x10 {
@@ -73,70 +97,73 @@ button {
     width: 550px;
     height: 580px;
     box-sizing: border-box;
-    border: 1px solid grey;
+    border: 1px solid gold;
 } 
 
 
 /* Mobile */
-[class*="col-"]{
-    width: 100%;
-    float: left;
+@media only screen and (min-width: 320px){
+    [class*="col-"]{
+        width: 100%;
+        float: left;
+    }
+
+    .col-m-1 {
+        width: 8.33%;
+    }
+    
+    .col-m-2 {
+        width: 16.66%;
+    }
+    
+    .col-m-3 {
+        width: 25%;
+    }
+    
+    .col-m-4 {
+        width: 33.33%;
+    }
+    
+    .col-m-5 {
+        width: 41.66%;
+    }
+    
+    .col-m-6 {
+        width: 50%;
+    }
+    
+    .col-m-7 {
+        width: 58.33%;
+    }
+    
+    .col-m-8 {
+        width: 66.66%;
+    }
+    
+    .col-m-9 {
+        width: 75%;
+    }
+    
+    .col-m-10 {
+        width: 83.33%;
+    }
+    
+    .col-m-11 {
+        width: 91.66%;
+    }
+    
+    .col-m-12 {
+        width: 100%;
+    }
 }
+
 
 /* Tablet */
 @media only screen and (min-width: 650px){
     [class*="col-"]{
-        /* width: 100%; */
+        width: 100%;
         float: left;
     }
-
-    /* .col-t-1 {
-        width: 8.33%;
-    }
-    
-    .col-t-2 {
-        width: 16.66%;
-    }
-    
-    .col-t-3 {
-        width: 25%;
-    }
-    
-    .col-t-4 {
-        width: 33.33%;
-    }
-    
-    .col-t-5 {
-        width: 41.66%;
-    }
-    
-    .col-t-6 {
-        width: 50%;
-    }
-    
-    .col-t-7 {
-        width: 58.33%;
-    }
-    
-    .col-t-8 {
-        width: 66.66%;
-    }
-    
-    .col-t-9 {
-        width: 75%;
-    }
-    
-    .col-t-10 {
-        width: 83.33%;
-    }
-    
-    .col-t-11 {
-        width: 91.66%;
-    }
-    
-    .col-t-12 {
-        width: 100%;
-    } */
 }
 
 

@@ -7,39 +7,35 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Igra memorije</h1>
-        <div class="row">
-            <div class="col">
-                <form>
-                    <input type="text" name="Username" id="username">
-                    <span id="timer">0</span>
-                    <br><br>
-                    <div class="col-6">
-                        <input type="radio" name="category" id="easy" value="4" checked>Lako
-                        <input type="radio" name="category" id="middle" value="6">Srednje
-                        <input type="radio" name="category" id="hard" value="8">Tesko
-                        <input type="radio" name="category" id="expert" value="10">Ekspert
-                    </div>
-                </form>
-            </div>
+    <h1>Igra memorije</h1>
+    <div class="col-12">
+        <form>
+            <input type="text" name="Username" id="username">
+            <span id="timer">0</span>
+            <br><br>
             <div class="col-6">
-                <button id="e" class="btn">Lako</button>
-                <button id="m" class="btn">Srednje</button>
-                <button id="h" class="btn">Tesko</button>
-                <button id="exp" class="btn">Ekspert</button>
+                <input type="radio" name="category" id="easy" value="4" checked>Lako
+                <input type="radio" name="category" id="middle" value="6">Srednje
+                <input type="radio" name="category" id="hard" value="8">Tesko
+                <input type="radio" name="category" id="expert" value="10">Ekspert
             </div>
-        </div> 
-        <div class="row">
-            <div class="col-6">
-                <div id="showCase"></div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div id="table"></div>
-                </div>
-            </div>
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <div id="showCase"></div>
         </div>
+        <div class="col-6 col-m-10">
+            <button id="e" class="btn">Lako</button>
+            <button id="m" class="btn">Srednje</button>
+            <button id="h" class="btn">Tesko</button>
+            <button id="exp" class="btn">Ekspert</button>
+        </div>
+    </div>
+    <div class="col-6"></div>
+    <div class="col-6">
+        <div id="table"></div>
+    </div>
         <!--BEZ FOMRE-->
         <!-- <input type="text" name="Username" id="username">
         <span id="timer">0</span>
@@ -48,11 +44,7 @@
         <input type="radio" name="category" id="middle" value="6">Srednje
         <input type="radio" name="category" id="hard" value="8">Tesko
         <input type="radio" name="category" id="expert" value="10">Ekspert -->
-    </div>
-
-
-    <div id="proba"></div>
-    
+    <!-- </div> -->
     
     <script src="script.js"></script>
     <script src="result.js"></script>

@@ -8,8 +8,6 @@ let resultArrHard = [];
 let resultArrExpert = [];
 //-----------------------------------------------------------------------
 
-// let divShowTable = document.createElement("div");
-
 //TABELA REZULTATA 
 //f-ja sa parametrom resultArr, koji cu kasnije da pozovem kao callback fu-ju
 function resultTable(resultArr, key, div) {    
@@ -91,4 +89,3 @@ function keepingLocalStorage(myArr, key, id) {
     }
 }
 
-// let divProba = document.getElementById("proba");
