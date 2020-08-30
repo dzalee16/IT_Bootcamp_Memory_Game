@@ -108,7 +108,37 @@ function category() {
     }
 }
 //----------------------------------------------------------------------------
+//FUNKCIJA ZA PRIKAZIVANJE TABELA
+//imam jedan parametar sa kojim cu da hvatam napravljanje divove kada kliknem ma dugme
+function showTable(div) {
+    //svakoj tabeli postavljam predhodno u f-ji resultTable() klasu na content, zatim prolazim kroz svaki element klase "content" i postavljam joj display na none, kako se ne bi prikazivala
+    let content = document.querySelectorAll(".content");
+    content.forEach(elem => {
+        elem.style.display = "none";
+    });
 
+    //hvatam svaki element sa id tokom klika na dugme i pravljenja tabele, tako da kada kliknem na dugme odredjena tabela kojoj sam dohvatio div dobija dipslay block, a predhodna tabela postaje display none.
+    document.getElementById(div).style.display = "block";
+}
+
+//--------------------------------------------------------------------------
+//DUGMAD SA EVENT LISTENEROM
+btnE.addEventListener('click', () => {
+    resultTable(resultArrEasy, "Easy", "eee");
+    showTable("eee");
+});
+btnM.addEventListener('click', () => {
+    resultTable(resultArrMiddle, "Middle", "mmm");
+    showTable("mmm");
+});
+btnH.addEventListener('click', () => {
+    resultTable(resultArrHard, "Hard", "hhh");
+    showTable("hhh");
+});
+btnExp.addEventListener('click', () => {
+    resultTable(resultArrExpert, "Expert", "ex");
+    showTable("ex");
+});
 
 //----------------------------------------------------------------------------
 //POCETAK ODBROJAVANJA
@@ -129,15 +159,12 @@ function timerEnd() {
 }
 //----------------------------------------------------------------------------
 
-
-
 //----------------------------------------------------------------------------
 //RADNOM NIZ
 let radnomCard = arr => {
     arr.sort(() => 0.5 - Math.random());
 }
 //----------------------------------------------------------------------------
-
 
 //----------------------------------------------------------------------------
 //FUNKCIJA NOVE IGRE
@@ -146,33 +173,17 @@ function newGame(arr, div) {
         //Uvodim f-ju za zavrsetak vremena, ako su sve kartice otvorene
         timerEnd();
 //--------------------------------------------------------------------------
-//LOCAL STORAGE
+//CUVANJE SVAKE KATEGORIJE U NIZU OBJEKATA UNUTAR LOCAL STORAGE-A
         category();
-        btnE.addEventListener('click', function() {
-            resultTable(resultArrEasy, "Easy");
-            // divTable.appendChild(divShowTable);
-        });
-        btnM.addEventListener('click', function() {
-            resultTable(resultArrMiddle, "Middle");
-
-        });
-        btnH.addEventListener('click', function() {
-            resultTable(resultArrHard, "Hard");
-        });
-        btnExp.addEventListener('click', function() {
-            resultTable(resultArrExpert, "Expert");
-        });
         
 //-----------------------------------------------------------------------------
-
         let text = "Uspesno ste zavrsili igru, da li zelite da igrate opet?";
         if(confirm(text) == true){
             let divOldGame = document.getElementById(div);
             divShowCase.removeChild(divOldGame);
-            //Uvodim f-ju za ponovno kreiranje tabele i pocetak igre
-
-            //Ovde uvedi posle fu-ju starGame()
+            //Uvodim f-ju za ponovno kreiranje tabele i pocetak igre            
             createTable(arr, div); 
+
             //Uvodim f-ju pocetak merenja vremena za novu igru
             timerStart();
         } else {
@@ -184,13 +195,12 @@ function newGame(arr, div) {
                 divShowCase.removeChild(divOldGame);
                 form.reset();
                 spanTimer.innerHTML = 0;
-            } , 1000 * 30);
+            } , 1000 * 300);
         }
         counter = 0;
     }
 }
 //----------------------------------------------------------------------------
-
 
 //---------------------------------------------------------------------------
 //FUNKCIJA OKRETANJE KARTE
@@ -263,21 +273,11 @@ function createTable(arr, div) {
         //Podesavam divu id, koji ce da ima naziv, parametra fukncije, a kasnije se f-ji prosledjuje parametar, kao naziv id-ja div-a, u zavisnosti od tezine igre
         divCase.setAttribute("id", div);
         divCase.appendChild(card);
+        //Svakom tabelo pored id, dodajem i class="cards"
+        divCase.classList.add("cards");
     }
     divShowCase.appendChild(divCase);
 }
-
-// createTable(myArr4, "case4x4");
 //----------------------------------------------------------------------------
 
-
-//---------------------------------------------------------------------------
-//Radnom redjanje niza
-// let niz = ["Mladen", "jovic", "Tijana", "Bojan", "Jasmina", "Strahinja"];
-// console.log("Drugo");
-
-// for(let i = niz.length - 1; i >= niz.length + 1 - niz.length; i-- ){ 
-//     console.log(niz[i]);
-// }
-//------------------------------------------------------------------------
 

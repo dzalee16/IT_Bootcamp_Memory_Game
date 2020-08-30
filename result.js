@@ -12,9 +12,11 @@ let resultArrExpert = [];
 
 //TABELA REZULTATA 
 //f-ja sa parametrom resultArr, koji cu kasnije da pozovem kao callback fu-ju
-function resultTable(resultArr, key) {    
-    // let divShowTable = document.createElement("div");
-    // divShowTable.setAttribute("id", div);
+function resultTable(resultArr, key, div) {    
+    let divShowTable = document.createElement("div");
+    divShowTable.setAttribute("id", div);
+    divShowTable.classList.add("content");
+
     resultArr = JSON.parse(localStorage.getItem(key));
     console.log(resultArr);
     let table = document.createElement("table");
@@ -42,7 +44,8 @@ function resultTable(resultArr, key) {
         row.appendChild(cell3);
         table.appendChild(row);
     });    
-    divTable.appendChild(table); 
+    divShowTable.appendChild(table);
+    divTable.appendChild(divShowTable); 
 }
 
 //FUNKCIJA LOCALSTORAGE LAKA KATEGORIJA
