@@ -9,6 +9,10 @@ let btnE = document.getElementById("e");
 let btnM = document.getElementById("m");
 let btnH = document.getElementById("h");
 let btnExp = document.getElementById("exp");
+let btnStartGame = document.getElementById("btnStartGame");
+
+let radioButtons = document.querySelectorAll("input[name=category]");
+console.log(radioButtons);
 
 //-------------------------------------------------------------------------
 //NIZOVI
@@ -18,6 +22,7 @@ let cardsArray = [];
 let cardsArrayId = [];
 //Brojac
 let counter = 0;
+let disabledCommand = true;
 
 //---------------------------------------------------------------------
 
@@ -39,50 +44,57 @@ let myArr4 = ["001.png", "002.png", "003.png", "004.png", "005.png", "006.png", 
 
 //Korisnicko ime i radio button
 //----------------------------------------------------------------------------
-// inputName.addEventListener('keyup', event => {
-//     event.preventDefault();
-//     if(event.keyCode == 13){
-//         let username = inputName.value;
-//         if(username == "" || username == null){
-//             alert("Morate uneti korisnicko ime");
-//         } else {
-//             localStorage.setItem("Korisnicko ime", username);
-//             // resultTable.push(username);
-//             // localStorage.setItem("resultTable", JSON.stringify(resultTable));
-//             let inputRadio = document.querySelector("input[name=category]:checked");
-//             if(inputRadio.value == "4"){
-//                 createTable(myArr4, "case4x4");
-//             } else if(inputRadio.value == "6"){
-//                 createTable(myArr6, "case6x6");
-//             } else if(inputRadio.value == "8"){
-//                 createTable(myArr8, "case8x8");
-//             } else {
-//                 createTable(myArr10, "case10x10");
-//             }
-//         }
-//     }
-// });
-
-//FORMA
-form.addEventListener('submit', event => {
+inputName.addEventListener('keyup', event => {
     event.preventDefault();
-    let username = inputName.value;
-    if(username == "" && username == null){
-        alert("Morate da unesete korisnicko ime, sa najmanje jednim karakterom");
-    } else {
-        let inputRadio = document.querySelector("input[name=category]:checked");
-        let checkedBtn = inputRadio.id;
-        if(checkedBtn == "easy"){
-            createTable(myArr4, "case4x4");
-        } else if(checkedBtn == "middle"){
-            createTable(myArr6, "case6x6");
-        } else if(checkedBtn == "hard"){
-            createTable(myArr8, "case8x8");
+    if(event.keyCode == 13){
+        let username = inputName.value;
+        if(username == "" || username == null){
+            alert("Morate uneti korisnicko ime!!!");
         } else {
-            createTable(myArr10, "case10x10");
+            // timerEnd();
+            localStorage.setItem("Korisnicko ime", username);
+            // resultTable.push(username);
+            // localStorage.setItem("resultTable", JSON.stringify(resultTable));
+            // startGame();
+            // timerStart();
+            // disabled();
         }
     }
 });
+
+//DISABLE
+function disabled() {
+    disabledCommand = false;
+}
+
+//POCETAK IGRE
+function startGame() {
+    if(disabledCommand === true) {
+        let inputRadio = document.querySelector("input[name=category]:checked");
+        if(inputRadio.value == "4"){
+            createTable(myArr4, "case4x4");
+            showOneTableOfCards("case4x4");
+        } else if(inputRadio.value == "6"){
+            createTable(myArr6, "case6x6");
+            showOneTableOfCards("case6x6");
+        } else if(inputRadio.value == "8"){
+            createTable(myArr8, "case8x8");
+            showOneTableOfCards("case8x8");
+        } else {
+            createTable(myArr10, "case10x10");
+            showOneTableOfCards("case10x10");
+        }
+    }
+}
+
+//KLIKOM NA DUGME OTPOCINJE IGRA
+btnStartGame.addEventListener('click', () => {
+    timerEnd();
+    startGame();
+    timerStart();
+    disabled();
+});
+
 
 //----------------------------------------------------------------------
 //FUNKCIJA KATEGORIJE ZA SMESTANJE U LOCAL STORAGE
@@ -102,7 +114,7 @@ function category() {
 //----------------------------------------------------------------------------
 //FUNKCIJA ZA PRIKAZIVANJE TABELA
 //imam jedan parametar sa kojim cu da hvatam napravljanje divove kada kliknem ma dugme
-function showTable(div) {
+function showOneResultTable(div) {
     //svakoj tabeli postavljam predhodno u f-ji resultTable() klasu na content, zatim prolazim kroz svaki element klase "content" i postavljam joj display na none, kako se ne bi prikazivala
     let content = document.querySelectorAll(".content");
     content.forEach(elem => {
@@ -117,37 +129,41 @@ function showTable(div) {
 //DUGMAD SA EVENT LISTENEROM
 btnE.addEventListener('click', () => {
     resultTable(resultArrEasy, "Easy", "eee");
-    showTable("eee");
+    showOneResultTable("eee");
 });
 btnM.addEventListener('click', () => {
     resultTable(resultArrMiddle, "Middle", "mmm");
-    showTable("mmm");
+    showOneResultTable("mmm");
 });
 btnH.addEventListener('click', () => {
     resultTable(resultArrHard, "Hard", "hhh");
-    showTable("hhh");
+    showOneResultTable("hhh");
 });
 btnExp.addEventListener('click', () => {
     resultTable(resultArrExpert, "Expert", "ex");
-    showTable("ex");
+    showOneResultTable("ex");
 });
 
 //----------------------------------------------------------------------------
 //POCETAK ODBROJAVANJA
 let clock = null;
 function timerStart(){
-    let counter = 0;
-    if(clock == null){
-        clock = setInterval(() => {
-            spanTimer.innerHTML = counter++;
-        },1000);
+    if(disabledCommand === true){
+        let counter = 0;
+        if(clock == null){
+            clock = setInterval(() => {
+                spanTimer.innerHTML = counter++;
+            },1000);
+        }
     }
 }
 //------------------------------------------------------------------------------
 //KRAJ ODBROJAVANJA
 function timerEnd() {
-    clearInterval(clock);
+    if(disabledCommand === true){
+        clearInterval(clock);
         clock = null;
+    }
 }
 //----------------------------------------------------------------------------
 
@@ -163,6 +179,7 @@ let radnomCard = arr => {
 function newGame(arr, div) {
     if(counter == arr.length){
         //Uvodim f-ju za zavrsetak vremena, ako su sve kartice otvorene
+        disabledCommand = true;
         timerEnd();
 //--------------------------------------------------------------------------
 //CUVANJE SVAKE KATEGORIJE U NIZU OBJEKATA UNUTAR LOCAL STORAGE-A
@@ -171,13 +188,28 @@ function newGame(arr, div) {
 //-----------------------------------------------------------------------------
         let text = "Uspesno ste zavrsili igru, da li zelite da igrate opet?";
         if(confirm(text) == true){
+            //Praznim predhodni div -> tzv. OldDiv
             let divOldGame = document.getElementById(div);
             divShowCase.removeChild(divOldGame);
-            //Uvodim f-ju za ponovno kreiranje tabele i pocetak igre            
-            createTable(arr, div); 
-
-            //Uvodim f-ju pocetak merenja vremena za novu igru
-            timerStart();
+           
+            //Klikom na dugme pocni igru pocinjem ponovno igru
+            btnStartGame.addEventListener('click', () => {
+                timerStart();
+                let inputRadio = document.querySelector("input[name=category]:checked");
+                if(inputRadio.value == "4"){
+                    createTable(myArr4, "case4x4");
+                    showOneTableOfCards("case4x4");
+                } else if(inputRadio.value == "6"){
+                    createTable(myArr6, "case6x6");
+                    showOneTableOfCards("case6x6");
+                } else if(inputRadio.value == "8"){
+                    createTable(myArr8, "case8x8");
+                    showOneTableOfCards("case8x8");
+                } else {
+                    createTable(myArr10, "case10x10");
+                    showOneTableOfCards("case10x10");
+                }
+            });
         } else {
             //Ovde stavi tabelu rezultata
             alert("Vas rezultat mozete pogledati klikom na polje kategorije koju ste igrali");
@@ -185,9 +217,9 @@ function newGame(arr, div) {
             setTimeout(() => {
                 let divOldGame = document.getElementById(div);
                 divShowCase.removeChild(divOldGame);
-                form.reset();
+                inputName.value = "";
                 spanTimer.innerHTML = 0;
-            } , 1000 * 30);
+            } , 1000 * 5);
         }
         counter = 0;
     }
@@ -201,6 +233,7 @@ function cardsFliping(arr, card, i, div) {
         //Ukoliko je niz slika strogo manji od 2 - omogucava mi okretanje samo dve kartice
         if(cardsArray.length < 2) {
             card.setAttribute("src", `images/${arr[i]}`);
+            // card.classList.add("clicked");
             console.log(event);
             console.log(card);
             console.log("Uslov 1")
@@ -219,6 +252,9 @@ function cardsFliping(arr, card, i, div) {
                 console.log("Uslov 3");
                 //Ako je prvi elem niza slika jednak drugom, povecavaj mi brojilac za 2, posto su dve slike okrenute, i isprazni mi oba niza 
                 if(cardsArray[0] == cardsArray[1]){
+                    // if(event.target.classList == "clicked"){
+                    //     card.removeEventListener('click', event);
+                    // }
                     counter += 2;
                     console.log(counter);
                     cardsArray = [];
@@ -257,11 +293,11 @@ function createTable(arr, div) {
         card.setAttribute("src", `images/gym.png`);
         card.setAttribute("id", i);
         //Uvodim f-ju radnom rasporeda karata, pre samog pocetka okretanja
-        radnomCard(arr);
+        // radnomCard(arr);
         //Uvodim f-ju okretanje karata
         cardsFliping(arr, card, i, div);
         //Uvodim f-ju za pocetak merenja vremena
-        timerStart();
+        // timerStart();
         //Podesavam divu id, koji ce da ima naziv, parametra fukncije, a kasnije se f-ji prosledjuje parametar, kao naziv id-ja div-a, u zavisnosti od tezine igre
         divCase.setAttribute("id", div);
         divCase.appendChild(card);
@@ -273,3 +309,40 @@ function createTable(arr, div) {
 //----------------------------------------------------------------------------
 
 
+// function disabledCard() {
+//     firstCard.removeEventListener('click', cardsFliping);
+//     secondCard.removeEventListener('click', cardsFliping);
+// }
+
+//FUNKCIJA PRIKAZIVANJA JEDNE OD TABLE SA KARTICAMA
+function showOneTableOfCards(div) {
+    let cards = document.querySelectorAll(".cards");
+    cards.forEach(card => {
+        card.style.display = "none";
+    });
+
+    document.getElementById(div).style.display = "block";
+}
+
+
+
+//FORMA
+// form.addEventListener('submit', event => {
+//     event.preventDefault();
+//     let username = inputName.value;
+//     if(username == "" && username == null){
+//         alert("Morate da unesete korisnicko ime, sa najmanje jednim karakterom");
+//     } else {
+//         let inputRadio = document.querySelector("input[name=category]:checked");
+//         let checkedBtn = inputRadio.id;
+//         if(checkedBtn == "easy"){
+//             createTable(myArr4, "case4x4");
+//         } else if(checkedBtn == "middle"){
+//             createTable(myArr6, "case6x6");
+//         } else if(checkedBtn == "hard"){
+//             createTable(myArr8, "case8x8");
+//         } else {
+//             createTable(myArr10, "case10x10");
+//         }
+//     }
+// });
