@@ -52,12 +52,14 @@ inputName.addEventListener('keyup', event => {
             alert("Morate uneti korisnicko ime!!!");
         } else {
             // timerEnd();
+            alert("Da bi ste poceli sa igrom izaberite kategoriju, i kliknite na 'Pocni igru'");
             localStorage.setItem("Korisnicko ime", username);
-            // resultTable.push(username);
-            // localStorage.setItem("resultTable", JSON.stringify(resultTable));
-            // startGame();
-            // timerStart();
-            // disabled();
+            btnStartGame.addEventListener('click', () => {
+                timerEnd();
+                startGame();
+                timerStart();
+                disabled();
+            });
         }
     }
 });
@@ -86,15 +88,6 @@ function startGame() {
         }
     }
 }
-
-//KLIKOM NA DUGME OTPOCINJE IGRA
-btnStartGame.addEventListener('click', () => {
-    timerEnd();
-    startGame();
-    timerStart();
-    disabled();
-});
-
 
 //----------------------------------------------------------------------
 //FUNKCIJA KATEGORIJE ZA SMESTANJE U LOCAL STORAGE
@@ -219,7 +212,7 @@ function newGame(arr, div) {
                 divShowCase.removeChild(divOldGame);
                 inputName.value = "";
                 spanTimer.innerHTML = 0;
-            } , 1000 * 5);
+            } , 1000 * 30);
         }
         counter = 0;
     }
@@ -228,21 +221,21 @@ function newGame(arr, div) {
 
 //---------------------------------------------------------------------------
 //FUNKCIJA OKRETANJE KARTE
-function cardsFliping(arr, card, i, div) {
-    card.addEventListener('click', event => {
+function cardsFliping(arr, card,  i, div) {
+    card.addEventListener('click', function hendler(event) {
         //Ukoliko je niz slika strogo manji od 2 - omogucava mi okretanje samo dve kartice
         if(cardsArray.length < 2) {
             card.setAttribute("src", `images/${arr[i]}`);
-            // card.classList.add("clicked");
             console.log(event);
             console.log(card);
             console.log("Uslov 1")
+            
             // Ukoliko je niz slika jendak 0, sto je uvek na pocetku - dodaj sliku u niz slika, i id u niz id-ja
             if(cardsArray.length == 0){
                 cardsArray.push(arr[i]);
                 cardsArrayId.push(i);    
                 console.log(cardsArray, cardsArrayId);
-                console.log("Uslov 2");
+                console.log("Uslov 2");               
             //Za drugi klik nece biti ispunjen prvi uslov vec drugi jer ce niz slika da bude jendak sa 1
             //Tu mi dodaj jos po jedan element u moja dva niza
             } else if(cardsArray.length == 1){
@@ -251,10 +244,11 @@ function cardsFliping(arr, card, i, div) {
                 console.log(cardsArray, cardsArrayId);
                 console.log("Uslov 3");
                 //Ako je prvi elem niza slika jednak drugom, povecavaj mi brojilac za 2, posto su dve slike okrenute, i isprazni mi oba niza 
-                if(cardsArray[0] == cardsArray[1]){
-                    // if(event.target.classList == "clicked"){
-                    //     card.removeEventListener('click', event);
-                    // }
+                if(cardsArray[0] === cardsArray[1]){
+                    let card1 = document.getElementById(`${cardsArrayId[0]}`);
+                    let card2 = document.getElementById(`${cardsArrayId[1]}`);
+                    card1.removeEventListener('click', hendler);
+                    card2.removeEventListener('click', hendler);
                     counter += 2;
                     console.log(counter);
                     cardsArray = [];
@@ -276,10 +270,12 @@ function cardsFliping(arr, card, i, div) {
                         cardsArrayId = [];
                     } , 1000);
                 }
+                
             }
         }
     });
 }
+
 //---------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------
@@ -305,14 +301,10 @@ function createTable(arr, div) {
         divCase.classList.add("cards");
     }
     divShowCase.appendChild(divCase);
+//--------------------------------------------------------------------
 }
+// createTable(myArr4, "case4x4");
 //----------------------------------------------------------------------------
-
-
-// function disabledCard() {
-//     firstCard.removeEventListener('click', cardsFliping);
-//     secondCard.removeEventListener('click', cardsFliping);
-// }
 
 //FUNKCIJA PRIKAZIVANJA JEDNE OD TABLE SA KARTICAMA
 function showOneTableOfCards(div) {
@@ -323,26 +315,41 @@ function showOneTableOfCards(div) {
 
     document.getElementById(div).style.display = "block";
 }
+//--------------------------------------------------------------------------------
 
 
 
-//FORMA
-// form.addEventListener('submit', event => {
-//     event.preventDefault();
-//     let username = inputName.value;
-//     if(username == "" && username == null){
-//         alert("Morate da unesete korisnicko ime, sa najmanje jednim karakterom");
-//     } else {
-//         let inputRadio = document.querySelector("input[name=category]:checked");
-//         let checkedBtn = inputRadio.id;
-//         if(checkedBtn == "easy"){
-//             createTable(myArr4, "case4x4");
-//         } else if(checkedBtn == "middle"){
-//             createTable(myArr6, "case6x6");
-//         } else if(checkedBtn == "hard"){
-//             createTable(myArr8, "case8x8");
-//         } else {
-//             createTable(myArr10, "case10x10");
-//         }
-//     }
-// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

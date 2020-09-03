@@ -14,7 +14,7 @@ function resultTable(resultArr, key, div) {
     let divShowTable = document.createElement("div");
     divShowTable.setAttribute("id", div);
     divShowTable.classList.add("content");
-
+    
     resultArr = JSON.parse(localStorage.getItem(key));
     console.log(resultArr);
     let table = document.createElement("table");

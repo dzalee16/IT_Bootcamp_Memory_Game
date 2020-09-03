@@ -63,6 +63,21 @@ table td {
     border-radius: 3px ;
 }
 
+/* Proba */
+/* #proba {
+    display: block;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    width: 220px;
+    height: 240px;
+    border: 1px solid black;
+}
+
+.mladen {
+    display: inline-block;
+} */
+
+
 /* Polja za igru */
  #case4x4 {
     display: block;
