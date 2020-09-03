@@ -289,7 +289,7 @@ function createTable(arr, div) {
         card.setAttribute("src", `images/gym.png`);
         card.setAttribute("id", i);
         //Uvodim f-ju radnom rasporeda karata, pre samog pocetka okretanja
-        // radnomCard(arr);
+        radnomCard(arr);
         //Uvodim f-ju okretanje karata
         cardsFliping(arr, card, i, div);
         //Uvodim f-ju za pocetak merenja vremena
